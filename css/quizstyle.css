@@ -1,0 +1,77 @@
+div.question-state{
+    position:relative;
+    left: 35%;
+    top: 120px;
+    width: 600px;
+    margin:0px;
+}
+
+h2.questiontext{
+    text-align: center;
+    font-size: 50px;
+}
+
+div.answersbox{
+    padding: 30px;
+    border: 2px solid black;
+    border-radius: 20px;
+    min-height: 200px;
+    background-color: white;
+}
+
+p.errorMessage{
+    color:red;
+    font-size: 30px;
+    margin:10px;
+    text-align: center;
+    height: 30px;
+}
+
+ul.answersListStyle{
+    list-style: none;
+}
+
+div.question-state{
+    display: inline-block;
+}
+
+li.answerItem{
+    font-size: 40px;
+    background-color: rgb(233, 249, 255);
+    margin:10px;
+}
+
+li.answerItem > input{
+    width: 25px;
+    height: 25px;
+    position: relative;
+}
+
+div.quizgame{
+    color: black;
+}
+
+body.lighttheme{
+    background-color: rgb(240, 240, 240);
+}
+
+input.greenButton{
+    background-color: rgb(4, 214, 109);
+    border:1px solid black;
+    margin:20px;
+    padding:10px 15px;
+    font-size: 20px;
+    border-radius: 15px;
+}
+
+input.greenButton:hover{
+    background-color: springgreen;
+}
+
+input.greenButton:active{
+    background-color: rgb(217, 255, 236);
+}
+
+input.greenButton:disabled{
+    background-color: rgb(214, 214, 214);
+}
