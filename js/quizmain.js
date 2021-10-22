@@ -54,40 +54,65 @@ let currentState; //checks which is the current state
 //let usersAnswers = []; //lists the answers the user has chosen. Stored as objects.
 
 let introState;
-let questionState;
+let questionState = {
+    currentQuestion:null,
+    usersAnswers:[],
+    createDom:function(state){
+        const questionStateEl = document.createElement("div");
+        questionStateEl.className = "question-state";
+
+        const questionContainer = document.createElement("div");
+        questionContainer.className = "question-container";
+
+        questionContainer.innerHTML += `<h2 class="questiontext" id="question-text">Insert Question</h2>`;
+    
+        const answersBox = document.createElement("div");
+        answersBox.className = "answersbox";
+        answersBox.innerHTML += `<ul class="answersListStyle" id="listanswers"></ul>`;
+        answersBox.innerHTML += `<p id="answerErrorMessage" class="errorMessage"></p> `;
+        answersBox.innerHTML += `<input type="button" value="NEXT" class="greenButton" id="next-button">`;
+
+        questionContainer.appendChild(answersBox);
+        questionStateEl.appendChild(questionContainer);
+
+        questionStateEl.innerHTML += `<input type="button" value="CHECK ANSWERS" class="greenButton" id="check-button">`;
+        state.appendChild(questionStateEl);
+
+        document.querySelector("#next-button").addEventListener("click", nextQuestionItem);
+        document.querySelector("#check-button").addEventListener("click", correctQuiz);
+    }
+}
 let resultState;
 
 
-function createQuestionState(state){
 
-    questionState = {
-        currentQuestion:null,
-        usersAnswers:[]
-    }
-    const questionStateEl = document.createElement("div");
-    questionStateEl.className = "question-state";
+// function createQuestionState(state){
 
-    const questionContainer = document.createElement("div");
-    questionContainer.className = "question-container";
+//     questionState = {
+//         currentQuestion:null,
+//         usersAnswers:[]
+//     }
+//     const questionStateEl = document.createElement("div");
+//     questionStateEl.className = "question-state";
 
-    questionContainer.innerHTML += `<h2 class="questiontext" id="question-text">Insert Question</h2>`;
+//     const questionContainer = document.createElement("div");
+//     questionContainer.className = "question-container";
+
+//     questionContainer.innerHTML += `<h2 class="questiontext" id="question-text">Insert Question</h2>`;
     
-    const answersBox = document.createElement("div");
-    answersBox.className = "answersbox";
-    answersBox.innerHTML += `<ul class="answersListStyle" id="listanswers"></ul>`;
-    answersBox.innerHTML += `<p id="answerErrorMessage" class="errorMessage"></p> `;
-    answersBox.innerHTML += `<input type="button" value="NEXT" class="greenButton" id="nextButton">`;
+//     const answersBox = document.createElement("div");
+//     answersBox.className = "answersbox";
+//     answersBox.innerHTML += `<ul class="answersListStyle" id="listanswers"></ul>`;
+//     answersBox.innerHTML += `<p id="answerErrorMessage" class="errorMessage"></p> `;
+//     answersBox.innerHTML += `<input type="button" value="NEXT" class="greenButton" id="nextButton">`;
 
-    questionContainer.appendChild(answersBox);
-    questionStateEl.appendChild(questionContainer);
+//     questionContainer.appendChild(answersBox);
+//     questionStateEl.appendChild(questionContainer);
 
-    questionStateEl.innerHTML += `<input type="button" value="CHECK ANSWERS" class="greenButton" id="check-button">`;
-    state.appendChild(questionStateEl);
-    setCurrentState(questionState);
-}
-
-createQuestionState(quizState);
-populateQuestion(questionList[0]);
+//     questionStateEl.innerHTML += `<input type="button" value="CHECK ANSWERS" class="greenButton" id="check-button">`;
+//     state.appendChild(questionStateEl);
+//     setCurrentState(questionState);
+// }
 
 function populateQuestion(questionItem){
 
@@ -96,9 +121,7 @@ function populateQuestion(questionItem){
 
     //reset question form
     document.querySelector("#question-text").textContent = "";
-    while(answersList.firstChild){
-        answersList.removeChild(answersList.lastChild);
-    }
+    deleteChildren(answersList);
 
     document.querySelector("#question-text").textContent = questionItem.question;
 
@@ -121,7 +144,10 @@ function populateQuestion(questionItem){
 
 //EVENT LISTENERS
 
-document.querySelector("#nextButton").addEventListener("click", () =>{
+// UTILITY FUNCTIONS
+
+function nextQuestionItem(){
+    console.log("nextQuestionItem called");
     let radioButtonAnswers = document.querySelectorAll(`input[name=${questionState.currentQuestion.id}]`); //get radiobuttons and checkboxes
     let currentIndex = questionState.currentQuestion.id.match(/\d+/g)[0] -1 ; //get current index of question in questionList with regex
     const errorMessage = document.querySelector("#answerErrorMessage");
@@ -154,13 +180,7 @@ document.querySelector("#nextButton").addEventListener("click", () =>{
     else{
         console.log("End of the quiz");
     }
-})
-
-document.querySelector("#check-button").addEventListener("click", () =>{
-    correctQuiz();
-})
-
-// UTILITY FUNCTIONS
+}
 
 function correctQuiz(){
     console.log("check-button")
@@ -181,4 +201,16 @@ function correctQuiz(){
 
 function setCurrentState(state){
     currentState = state;
+    deleteChildren(quizState);
+    state.createDom(quizState);
+    
 }
+
+function deleteChildren(element){
+    while(element.firstChild){
+        element.removeChild(element.lastChild);
+    }
+}
+
+setCurrentState(questionState);
+populateQuestion(questionList[0]);
