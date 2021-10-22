@@ -129,7 +129,7 @@ function populateQuestion(questionItem){
 }
 
 document.querySelector("#nextButton").addEventListener("click", () =>{
-    let radioButtonAnswers = document.querySelectorAll(`input[name=${currentQuestion.id}]`);
+    let radioButtonAnswers = document.querySelectorAll(`input[name=${currentQuestion.id}]`); //get radiobuttons and checkboxes
     let currentIndex = currentQuestion.id.match(/\d+/g)[0] -1 ; //get current index of question in questionList with regex
     const errorMessage = document.querySelector("#answerErrorMessage");
 
