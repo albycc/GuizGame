@@ -1,9 +1,17 @@
+
 div.question-state{
     position:relative;
     left: 35%;
     top: 120px;
     width: 600px;
     margin:0px;
+
+}
+
+div.quizresult-state{
+    position:relative;
+    left:50%;
+    top: 120px;
 }
 
 h2.questiontext{
@@ -17,6 +25,33 @@ div.answersbox{
     border-radius: 20px;
     min-height: 200px;
     background-color: white;
+    width:600px;
+}
+
+div.resultsbox{
+    padding: 30px;
+    border: 2px solid black;
+    border-radius: 20px;
+    min-height: 200px;
+    background-color: white;
+    width:800px;
+    position: relative;
+    left:-25%;
+}
+
+
+div.result-circle{
+    background-color: aquamarine;
+    width:50px;
+    height:50px;
+    padding:40px;
+    border-radius: 50%;
+}
+
+div.result-circle > *{
+    font-size: 40px;
+    text-align: center;
+    margin:auto;
 }
 
 p.errorMessage{
@@ -25,6 +60,14 @@ p.errorMessage{
     margin:10px;
     text-align: center;
     height: 30px;
+}
+
+p.messageDisplay{
+    color:black;
+    font-size: 25px;
+    margin: 5px;
+    text-align: center;
+    height: 20px;
 }
 
 ul.answersListStyle{
