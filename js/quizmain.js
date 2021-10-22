@@ -49,28 +49,21 @@ let questionList = [
 ];
 
 const quizState = document.querySelector("#quiz-state");
-let currentQuestion = null; //the current question the user is in. Retrived from questionList
-let usersAnswers = []; //lists the answers the user has chosen. Stored as objects.
+let currentState; //checks which is the current state
+//let currentQuestion = null; //the current question the user is in. Retrived from questionList
+//let usersAnswers = []; //lists the answers the user has chosen. Stored as objects.
 
-createQuestionState(quizState);
-populateQuestion(questionList[0]);
+let introState;
+let questionState;
+let resultState;
 
-// <div class="question-state">
-
-    // <div class="question-container">
-    //     <h2 class="questiontext" id="question-text">Insert Question</h2>
-    //     <div class="answersbox">
-    //         <ul class="answersListStyle" id="listanswers">
-
-    //         </ul>
-    //         <input type="button" value="NEXT" class="greenButton" id="nextButton">
-    //     </div>
-    // </div>
-    // <input type="button" value="CHECK ANSWERS" class="greenButton">
-// </div>
 
 function createQuestionState(state){
 
+    questionState = {
+        currentQuestion:null,
+        usersAnswers:[]
+    }
     const questionStateEl = document.createElement("div");
     questionStateEl.className = "question-state";
 
@@ -90,14 +83,11 @@ function createQuestionState(state){
 
     questionStateEl.innerHTML += `<input type="button" value="CHECK ANSWERS" class="greenButton" id="check-button">`;
     state.appendChild(questionStateEl);
+    setCurrentState(questionState);
 }
 
-//
-// <li class="answerItem">
-//     <input type="radio" name="question1" id="answer1" value="1">
-//     <label for="answer1">Insert answer</label>
-// </li> 
-//
+createQuestionState(quizState);
+populateQuestion(questionList[0]);
 
 function populateQuestion(questionItem){
 
@@ -125,12 +115,15 @@ function populateQuestion(questionItem){
         listItem.innerHTML += `<label for=${answerID}>${elem}</label>`;
         answersList.appendChild(listItem);
     })
-    currentQuestion = questionItem;
+    console.log("currentState is questionState: ", Object.is(currentState, questionState));
+    questionState.currentQuestion = questionItem;
 }
 
+//EVENT LISTENERS
+
 document.querySelector("#nextButton").addEventListener("click", () =>{
-    let radioButtonAnswers = document.querySelectorAll(`input[name=${currentQuestion.id}]`); //get radiobuttons and checkboxes
-    let currentIndex = currentQuestion.id.match(/\d+/g)[0] -1 ; //get current index of question in questionList with regex
+    let radioButtonAnswers = document.querySelectorAll(`input[name=${questionState.currentQuestion.id}]`); //get radiobuttons and checkboxes
+    let currentIndex = questionState.currentQuestion.id.match(/\d+/g)[0] -1 ; //get current index of question in questionList with regex
     const errorMessage = document.querySelector("#answerErrorMessage");
 
     //has the user pressed any answer?
@@ -148,11 +141,11 @@ document.querySelector("#nextButton").addEventListener("click", () =>{
     })
 
     let answer = {
-        questionid:currentQuestion.id,
+        questionid:questionState.currentQuestion.id,
         answers:answeresChecked
     }
 
-    usersAnswers.push(answer);
+    questionState.usersAnswers.push(answer);
 
     //next question
     if(currentIndex+1 < questionList.length){
@@ -167,20 +160,25 @@ document.querySelector("#check-button").addEventListener("click", () =>{
     correctQuiz();
 })
 
+// UTILITY FUNCTIONS
+
 function correctQuiz(){
     console.log("check-button")
-    usersAnswers.forEach(elem => {
-        console.log(`---------------${elem.questionid}----------------------`);
+    questionState.usersAnswers.forEach(elem => {
+        console.log(`----------------${elem.questionid}--------------------`);
 
         //get question from questionList based on index number
-        let correctAnswers = questionList[usersAnswers.indexOf(elem)].correct;
+        let correctAnswers = questionList[questionState.usersAnswers.indexOf(elem)].correct;
         console.log("Users answers: ", ...elem.answers);
         console.log("Correct answers: ", ...correctAnswers);
 
-        //is the answers between question and users answers to that question correct? Find how many answers the user scored 
+        //is the answers between question and users answers to that question correct? Find how many answers the user scored
         let correct = elem.answers.every(a => correctAnswers.includes(a));
 
         console.log("Answered correctly? ", correct)
     });
 }
 
+function setCurrentState(state){
+    currentState = state;
+}
