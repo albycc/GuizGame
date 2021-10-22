@@ -93,12 +93,12 @@ let resultState = {
         resultCircle.className = "result-circle";
         resultCircle.innerHTML += "<span id='result-message'></span>";
         
-        const resultsbox = document.createElement("div");
-        resultsbox.className = "resultsbox";
-        resultsbox.setAttribute("id", "results-box")
+        // const resultsbox = document.createElement("div");
+        // resultsbox.className = "resultsbox";
+        // resultsbox.setAttribute("id", "results-box")
 
         resultStateEl.appendChild(resultCircle);
-        resultStateEl.appendChild(resultsbox);
+        //resultStateEl.appendChild(resultsbox);
 
         state.appendChild(resultStateEl);
     }
@@ -219,18 +219,18 @@ function displayResults(){
 
         let isCorrectAnswer = (compareAllArrayElements(typedAnswers, correctAnswers) && compareAllArrayElements(correctAnswers, typedAnswers));
 
-        resultsBox.innerHTML += `<h3>${elem.question}</h3>`;
-        let listAnswers = document.createElement("ul");
-        elem.answers.forEach((a, i) => {
-            let answerRow = document.createElement("li");
-            answerRow.textContent = a;
-            console.log(typedAnswers.includes(i+1));
-            if(typedAnswers.includes(i+1)){
-                answerRow.style.color = "green";
-            }
-            listAnswers.appendChild(answerRow);
-        })
-        resultsBox.appendChild(listAnswers);
+        // resultsBox.innerHTML += `<h3>${elem.question}</h3>`;
+        // let listAnswers = document.createElement("ul");
+        // elem.answers.forEach((a, i) => {
+        //     let answerRow = document.createElement("li");
+        //     answerRow.textContent = a;
+        //     console.log(typedAnswers.includes(i+1));
+        //     if(typedAnswers.includes(i+1)){
+        //         answerRow.style.color = "green";
+        //     }
+        //     listAnswers.appendChild(answerRow);
+        // })
+        // resultsBox.appendChild(listAnswers);
         
         console.log("Answered correctly? ", isCorrectAnswer);
         //is the answers between question and users answers to that question correct? Find how many answers the user scored
