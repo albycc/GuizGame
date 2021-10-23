@@ -50,6 +50,7 @@ let questionList = [
 
 const quizState = document.querySelector("#quiz-state");
 let currentState; //checks which is the current state
+const bodyEl = document.querySelector("body");
 
 let introState;
 
@@ -151,6 +152,16 @@ document.querySelector("#retry-button").addEventListener("click", () =>{
     populateQuestion(questionList[0]);
 })
 
+document.querySelector("#light-menu-item").addEventListener("click", () =>{
+    console.log("light them active");
+    bodyEl.className = "lighttheme";
+})
+
+document.querySelector("#dark-menu-item").addEventListener("click", () =>{
+    console.log("dark them active");
+    bodyEl.className = "darktheme";
+})
+
 // UTILITY FUNCTIONS
 
 function nextQuestionItem(){
@@ -248,7 +259,18 @@ function displayResults(){
         }
     });
     
-    document.querySelector("#result-message").textContent = (nrOfCorrectAnswers/questionList.length * 100) + "%";
+    const resultCircle =  document.querySelector(".result-circle");
+    let userScore = nrOfCorrectAnswers/questionList.length * 100;
+    document.querySelector("#result-message").textContent = userScore + "%";
+    if(userScore >= 75){
+        resultCircle.classList.toggle("result-circle-green");
+    }
+    else if(userScore >= 50){
+        resultCircle.classList.toggle("result-circle-orange");
+    }
+    else{
+        resultCircle.classList.toggle("result-circle-normal");
+    }
 }
 
 function compareAllArrayElements(arr, target){

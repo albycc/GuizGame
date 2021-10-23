@@ -1,3 +1,12 @@
+.lighttheme{
+    background-color: rgb(240, 240, 240);
+    color:black
+}
+
+.darktheme{
+    background-color: rgb(56, 56, 56);
+    color:rgb(211, 211, 211);
+}
 
 div.question-state{
     position:relative;
@@ -5,7 +14,6 @@ div.question-state{
     top: 80px;
     width: 600px;
     margin:0px;
-
 }
 
 div.quizresult-state{
@@ -18,6 +26,7 @@ h2.questiontext{
     text-align: center;
     font-size: 50px;
 }
+
 
 div.answersbox{
     padding: 30px;
@@ -39,19 +48,29 @@ div.resultsbox{
     left:-25%;
 }
 
-
 div.result-circle{
-    background-color: aquamarine;
     width:50px;
     height:50px;
     padding:40px;
     border-radius: 50%;
 }
 
-div.result-circle > *{
+.result-circle > *{
     font-size: 40px;
     text-align: center;
     margin:auto;
+}
+
+.result-circle-normal{
+    background-color: rgb(68, 132, 206);
+}
+
+.result-circle-orange{
+    background-color:orange;
+}
+
+.result-circle-green{
+    background-color:green;
 }
 
 p.errorMessage{
@@ -90,13 +109,22 @@ li.answerItem > input{
     position: relative;
 }
 
-div.quizgame{
-    color: black;
+.lighttheme li.answerItem{
+    background-color: rgb(233, 233, 233);
 }
 
-body.lighttheme{
-    background-color: rgb(240, 240, 240);
+.darktheme li.answerItem{
+    background-color: rgb(110, 110, 110);
 }
+
+.lighttheme div.answersbox{
+    background-color: rgb(255, 255, 255);
+}
+
+.darktheme div.answersbox{
+    background-color: rgb(133, 133, 133);
+}
+
 
 input.greenButton{
     background-color: rgb(4, 214, 109);
@@ -135,4 +163,35 @@ input.greenButton:disabled{
     margin:20px;
     border:none;
     float:right;
+}
+
+.dropdown{
+    float:right;
+}
+
+.dropdown-rollover{
+    display:none;
+    position:absolute;
+    background-color: rgb(245, 245, 245);
+    min-width: 150px;
+    z-index:1;
+    right:10px;
+    top:110px;
+}
+
+.dropdown-item{
+    border:none;
+    padding: 5px 10px;
+    background-color: rgb(245, 245, 245);
+    font-size: 20px;
+    display:block;
+    min-width: 150px;
+}
+
+.dropdown-item:hover{
+    background-color: rgb(209, 209, 209);
+}
+
+.dropdown:hover .dropdown-rollover{
+    display:block;
 }
