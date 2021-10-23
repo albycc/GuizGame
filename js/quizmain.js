@@ -52,6 +52,7 @@ const quizState = document.querySelector("#quiz-state");
 let currentState; //checks which is the current state
 
 let introState;
+
 let questionState = {
     currentQuestion:null,
     usersAnswers:[],
@@ -80,6 +81,10 @@ let questionState = {
 
         document.querySelector("#next-button").addEventListener("click", nextQuestionItem);
         document.querySelector("#check-button").addEventListener("click", checkAnswers);
+    },
+    reset:function(){
+        this.usersAnswers = [];
+        this.currentQuestion = null;
     }
 }
 
@@ -139,6 +144,13 @@ function populateQuestion(questionItem){
 
 //EVENT LISTENERS
 
+document.querySelector("#retry-button").addEventListener("click", () =>{
+    console.log("retry quiz");
+    questionState.reset();
+    setCurrentState(questionState);
+    populateQuestion(questionList[0]);
+})
+
 // UTILITY FUNCTIONS
 
 function nextQuestionItem(){
@@ -187,7 +199,16 @@ function nextQuestionItem(){
 
 //function for check answers button
 function checkAnswers(){
+    
     console.log("check-button");
+
+    //if the user is still answering the questions and pressing the check button to early
+    if(currentState == questionState && questionState.usersAnswers.length < questionList.length){
+        document.querySelector("#answerErrorMessage").textContent = "You must first complete the quiz before checking.";
+        return;
+    }
+
+    //if using this function when the app is not in questionState
     if(currentState !== questionState){
         console.log("Not in questionState. Aborting");
         return;
@@ -199,9 +220,13 @@ function checkAnswers(){
 }
 
 function displayResults(){
-    
+
+    if(currentState !== resultState){
+        console.log("Not in results. Aborting")
+        return;
+    }
+
     let nrOfCorrectAnswers = 0;
-    const resultsBox = document.querySelector("#results-box");
 
     questionList.forEach(elem => {
         console.log(`----------------${elem.id}--------------------`);
@@ -213,24 +238,8 @@ function displayResults(){
 
         console.log("Users answers: ", ...typedAnswers);
         console.log("Correct answers: ", ...correctAnswers);
-        
-        // listItem.innerHTML += `<input type=${questionItem.type} name=${questionItem.id} id=${answerID} value=${nrAnswers}>`;
-        // listItem.innerHTML += `<label for=${answerID}>${elem}</label>`;
 
         let isCorrectAnswer = (compareAllArrayElements(typedAnswers, correctAnswers) && compareAllArrayElements(correctAnswers, typedAnswers));
-
-        // resultsBox.innerHTML += `<h3>${elem.question}</h3>`;
-        // let listAnswers = document.createElement("ul");
-        // elem.answers.forEach((a, i) => {
-        //     let answerRow = document.createElement("li");
-        //     answerRow.textContent = a;
-        //     console.log(typedAnswers.includes(i+1));
-        //     if(typedAnswers.includes(i+1)){
-        //         answerRow.style.color = "green";
-        //     }
-        //     listAnswers.appendChild(answerRow);
-        // })
-        // resultsBox.appendChild(listAnswers);
         
         console.log("Answered correctly? ", isCorrectAnswer);
         //is the answers between question and users answers to that question correct? Find how many answers the user scored
@@ -240,8 +249,6 @@ function displayResults(){
     });
     
     document.querySelector("#result-message").textContent = (nrOfCorrectAnswers/questionList.length * 100) + "%";
-    
-    
 }
 
 function compareAllArrayElements(arr, target){

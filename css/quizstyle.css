@@ -2,7 +2,7 @@
 div.question-state{
     position:relative;
     left: 35%;
-    top: 120px;
+    top: 80px;
     width: 600px;
     margin:0px;
 
@@ -117,4 +117,22 @@ input.greenButton:active{
 
 input.greenButton:disabled{
     background-color: rgb(214, 214, 214);
+}
+
+.retryBtn-style{
+    background:url("/img/retry-button.png") no-repeat;
+    width:75px;
+    height:75px;
+    margin:20px;
+    border:none;
+    float:right;
+}
+
+.settingsBtn-style{
+    background:url("/img/retry-button.png") no-repeat;
+    width:75px;
+    height:75px;
+    margin:20px;
+    border:none;
+    float:right;
 }
