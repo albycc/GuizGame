@@ -1,52 +1,4 @@
-let questionList = [
-    {
-        "id": "question1",
-        "question": "What is the Capital of Great Britain?",
-        "type": "radio", //radio or checkbox
-        "answers": [
-            "Paris",
-            "London",
-            "Madrid",
-            "Berlin"
-        ],
-        "correct": [2] //from 1 and so forth
-    },
-    {
-        "id": "question2",
-        "question": "What is the Capital of Germany?",
-        "type": "radio", //radio or checkbox
-        "answers": [
-            "Berlin",
-            "Stockholm",
-            "Paris",
-            "New York"
-        ],
-        "correct": [1] //from 1 and so forth
-    },
-    {
-        "id": "question3",
-        "question": "What is the Capital of France?",
-        "type": "radio", //radio or checkbox
-        "answers": [
-            "Moscow",
-            "Rome",
-            "Paris"
-        ],
-        "correct": [3] //from 1 and so forth
-    },
-    {
-        "id": "question4",
-        "question": "Of the following cities, which one is in Great Britain?",
-        "type": "checkbox", //radio or checkbox
-        "answers": [
-            "Edinburgh",
-            "Oslo",
-            "Manchester",
-            "Lisbon"
-        ],
-        "correct": [1, 3] //from 1 and so forth
-    }
-];
+import { questionList } from "./questionData.js";
 
 const quizState = document.querySelector("#quiz-state");
 let currentState; //checks which is the current state
@@ -79,16 +31,14 @@ let questionState = {
         const answersBox = document.createElement("div");
         answersBox.className = "answersbox";
         answersBox.innerHTML += "<ul class='answersListStyle' id='listanswers'></ul>";
-        answersBox.innerHTML += "<p id='answerErrorMessage' class='errorMessage'></p> ";
-        answersBox.innerHTML += "<input type='button' value='NEXT' class='greenButton' id='next-button'>";
+        answersBox.innerHTML += "<p id='answerErrorMessage' class='errorMessage'></p><br /> ";
+        answersBox.innerHTML += "<br/><input type='button' value='NEXT' class='greenButton' id='next-button'>";
 
         questionContainer.appendChild(answersBox);
         questionStateEl.appendChild(questionContainer);
 
-        questionStateEl.innerHTML += "<input type='button' value='CHECK ANSWERS' class='greenButton' id='check-button'>";
+        questionStateEl.innerHTML += "<input type='button' value='CHECK ANSWERS' class='greenButton' id='check-button' disabled>";
         state.appendChild(questionStateEl);
-
-        //messageDisplay
 
         document.querySelector("#next-button").addEventListener("click", nextQuestionItem);
         document.querySelector("#check-button").addEventListener("click", checkAnswers);
@@ -108,13 +58,8 @@ let resultState = {
         const resultCircle = document.createElement("div");
         resultCircle.className = "result-circle";
         resultCircle.innerHTML += "<span id='result-message'></span>";
-        
-        // const resultsbox = document.createElement("div");
-        // resultsbox.className = "resultsbox";
-        // resultsbox.setAttribute("id", "results-box")
-
+    
         resultStateEl.appendChild(resultCircle);
-        //resultStateEl.appendChild(resultsbox);
 
         state.appendChild(resultStateEl);
     }
@@ -134,7 +79,9 @@ function populateQuestion(questionItem){
     document.querySelector("#question-text").textContent = "";
     deleteChildren(answersList);
 
-    document.querySelector("#question-text").textContent = questionItem.question;
+    const questionNr = questionList.indexOf(questionItem) + 1;
+
+    document.querySelector("#question-text").textContent = "Question " + questionNr + ": " + questionItem.question;
 
     questionItem["answers"].forEach((elem)=> {
         nrAnswers++;
@@ -189,7 +136,7 @@ document.querySelector("#dark-menu-item").addEventListener("click", () =>{
 function nextQuestionItem(){
     //console.log("nextQuestionItem called");
     let radioButtonAnswers = document.querySelectorAll(`input[name=${questionState.currentQuestion.id}]`); //get radiobuttons and checkboxes
-    let currentIndex = questionState.currentQuestion.id.match(/\d+/g)[0] -1 ; //get current index of question in questionList with regex
+    let currentIndex = questionList.indexOf(questionState.currentQuestion);
     const errorMessage = document.querySelector("#answerErrorMessage");
 
     //is there anymore questions to fill? If no abort function
@@ -221,13 +168,20 @@ function nextQuestionItem(){
 
     questionState.usersAnswers.push(answer);
 
-    //next question
+    console.log(questionList[currentIndex].id);
+
+    //next question if there is any
     if(currentIndex+1 < questionList.length){
         populateQuestion(questionList[currentIndex+1]);
     }
-    else{
-        console.log("End of the quiz");
+
+    console.log(currentIndex);
+    //was that the last question? If so disable next button and enabled check answers button
+    if(currentIndex+1 >= questionList.length){
+        document.querySelector("#next-button").disabled = true;
+        document.querySelector("#check-button").disabled = false;
     }
+    
 }
 
 //function for check answers button
@@ -266,7 +220,7 @@ function displayResults(){
         //get question from questionList based on index number
         
         console.log(elem.id);
-        let typedAnswers = questionState.usersAnswers.filter(a => a.id === elem.id)[0].answers; //get users answer based on id
+        let typedAnswers = questionState.usersAnswers.find(a => a.id === elem.id).answers; //get users answer based on id
         let correctAnswers = elem.correct; //get the correct answers
 
         console.log("Users answers: ", ...typedAnswers);

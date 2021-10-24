@@ -38,7 +38,7 @@ div.quizresult-state{
 
 h2.questiontext{
     text-align: center;
-    font-size: 50px;
+    font-size: 40px;
 }
 
 
@@ -63,15 +63,16 @@ div.resultsbox{
 }
 
 div.result-circle{
-    width:50px;
-    height:50px;
-    padding:40px;
+    width:100px;
+    height:100px;
+    line-height: 100px;
     border-radius: 50%;
+    text-align: center;
+    padding:40px;
 }
 
 .result-circle > *{
     font-size: 40px;
-    text-align: center;
     margin:auto;
 }
 
@@ -88,7 +89,7 @@ div.result-circle{
 }
 
 p.errorMessage{
-    color:red;
+    color:rgb(48, 48, 48);
     font-size: 30px;
     margin:10px;
     text-align: center;
@@ -112,7 +113,7 @@ div.question-state{
 }
 
 li.answerItem{
-    font-size: 40px;
+    font-size: 30px;
     background-color: rgb(233, 249, 255);
     margin:10px;
 }
@@ -156,6 +157,10 @@ input.greenButton{
 
 input.greenButton:hover{
     background-color: springgreen;
+}
+
+input.greenButton:disabled{
+    background-color: rgb(182, 182, 182);
 }
 
 input.greenButton:active{
