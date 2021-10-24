@@ -1,3 +1,7 @@
+body{
+    font-family: 'Comic Sans MS', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
 .lighttheme{
     background-color: rgb(240, 240, 240);
     color:black
@@ -16,10 +20,20 @@ div.question-state{
     margin:0px;
 }
 
+div.intro-state{
+    position:relative;
+    left: 35%;
+    top: 80px;
+    width: 600px;
+    margin:0px;
+}
+
 div.quizresult-state{
     position:relative;
-    left:50%;
-    top: 120px;
+    left: 50%;
+    top: 180px;
+    width: 600px;
+    margin:0px;
 }
 
 h2.questiontext{
@@ -125,6 +139,9 @@ li.answerItem > input{
     background-color: rgb(133, 133, 133);
 }
 
+.darktheme p{
+    color:rgb(233, 233, 233);
+}
 
 input.greenButton{
     background-color: rgb(4, 214, 109);
@@ -133,6 +150,8 @@ input.greenButton{
     padding:10px 15px;
     font-size: 20px;
     border-radius: 15px;
+    position:relative;
+    left:40%;
 }
 
 input.greenButton:hover{
@@ -163,6 +182,11 @@ input.greenButton:disabled{
     margin:20px;
     border:none;
     float:right;
+}
+
+div.button-menu{
+    position:relative;
+
 }
 
 .dropdown{

@@ -52,7 +52,17 @@ const quizState = document.querySelector("#quiz-state");
 let currentState; //checks which is the current state
 const bodyEl = document.querySelector("body");
 
-let introState;
+let introState = {
+    createDom:function(state){
+        const introState = document.createElement("div");
+        introState.className = "intro-state";
+        introState.innerHTML += "<h2 class='questiontext'>Welcome to Daily Quiz!</h2>";
+        introState.innerHTML += "<p class='messageDisplay'>Today we will talk about Europe</p><br/>";
+        introState.innerHTML += "<input type='button' value='START QUIZ' class='greenButton' id='start-quiz-btn'>";
+        state.appendChild(introState);
+        document.querySelector("#start-quiz-btn").addEventListener("click", startQuiz);
+    }
+}
 
 let questionState = {
     currentQuestion:null,
@@ -143,9 +153,21 @@ function populateQuestion(questionItem){
     questionState.currentQuestion = questionItem;
 }
 
+function startQuiz(){
+    console.log("quiz started");
+    setCurrentState(questionState);
+    populateQuestion(questionList[0]);
+}
+
 //EVENT LISTENERS
 
 document.querySelector("#retry-button").addEventListener("click", () =>{
+    //dont retry if the quiz is in intro or if the user is in the first question
+    if(currentState === introState || 
+        currentState === questionState && questionState.currentQuestion === questionList[0]){
+        console.log("You just started the quiz");
+        return;
+    }
     console.log("retry quiz");
     questionState.reset();
     setCurrentState(questionState);
@@ -290,5 +312,4 @@ function deleteChildren(element){
     }
 }
 
-setCurrentState(questionState);
-populateQuestion(questionList[0]);
+setCurrentState(introState);
