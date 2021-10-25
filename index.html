@@ -8,24 +8,21 @@
     <title>QuizGame</title>
 </head>
 <body class="lighttheme">
-    <div id="quizgame">
-
-        <div class="button-menu">
-            <div class="dropdown">
-                <img class="settingsBtn-style" id="settings-button" src="img/settings-button.png">
-                <div class="dropdown-rollover">
-                    <input type="button" value="LIGHT" class="dropdown-item" id="light-menu-item">
-                    <input type="button" value="DARK" class="dropdown-item" id="dark-menu-item">
-                </div>
+    <div class="button-menu">
+        <div class="dropdown">
+            <img class="buttonIcons" id="settings-button" src="img/settings-button.png" alt="settings">
+            <div class="dropdown-rollover">
+                <input type="button" value="LIGHT" class="dropdown-item" id="light-menu-item">
+                <input type="button" value="DARK" class="dropdown-item" id="dark-menu-item">
             </div>
-            <input type="image" class="retryBtn-style" id="retry-button" src="img/retry-button.png">
         </div>
+        <input type="image" class="buttonIcons" id="retry-button" src="img/retry-button.png" alt="retry-quiz">
+     </div>
 
 
-        <!-- state container, introState, questionState, resultState-->
-        <div id="quiz-state">
+     <!-- state container, introState, questionState, resultState-->
+    <div id="quiz-state">
 
-        </div>
     </div>
     <script type="module" src="js/quizmain.js"></script>
 </body>

@@ -1,7 +1,7 @@
 let questionList = [
     {
         "id": "question1",
-        "question": "What is the Capital of Great Britain?",
+        "question": "What is the Capital of the United Kingdom?",
         "type": "radio", //radio or checkbox
         "answers": [
             "Paris",

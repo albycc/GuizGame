@@ -15,7 +15,7 @@ body{
 div.question-state{
     position:relative;
     left: 35%;
-    top: 80px;
+    top: 100px;
     width: 600px;
     margin:0px;
 }
@@ -23,7 +23,7 @@ div.question-state{
 div.intro-state{
     position:relative;
     left: 35%;
-    top: 80px;
+    top: 180px;
     width: 600px;
     margin:0px;
 }
@@ -41,7 +41,6 @@ h2.questiontext{
     font-size: 40px;
 }
 
-
 div.answersbox{
     padding: 30px;
     border: 2px solid black;
@@ -49,17 +48,6 @@ div.answersbox{
     min-height: 200px;
     background-color: white;
     width:600px;
-}
-
-div.resultsbox{
-    padding: 30px;
-    border: 2px solid black;
-    border-radius: 20px;
-    min-height: 200px;
-    background-color: white;
-    width:800px;
-    position: relative;
-    left:-25%;
 }
 
 div.result-circle{
@@ -106,10 +94,6 @@ p.messageDisplay{
 
 ul.answersListStyle{
     list-style: none;
-}
-
-div.question-state{
-    display: inline-block;
 }
 
 li.answerItem{
@@ -171,17 +155,7 @@ input.greenButton:disabled{
     background-color: rgb(214, 214, 214);
 }
 
-.retryBtn-style{
-    background:url("/img/retry-button.png") no-repeat;
-    width:75px;
-    height:75px;
-    margin:20px;
-    border:none;
-    float:right;
-}
-
-.settingsBtn-style{
-    background:url("/img/retry-button.png") no-repeat;
+.buttonIcons{
     width:75px;
     height:75px;
     margin:20px;
@@ -191,7 +165,7 @@ input.greenButton:disabled{
 
 div.button-menu{
     position:relative;
-
+    top:-10px;
 }
 
 .dropdown{

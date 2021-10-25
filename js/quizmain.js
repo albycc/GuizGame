@@ -9,7 +9,7 @@ let introState = {
         const introState = document.createElement("div");
         introState.className = "intro-state";
         introState.innerHTML += "<h2 class='questiontext'>Welcome to Daily Quiz!</h2>";
-        introState.innerHTML += "<p class='messageDisplay'>Today we will talk about Europe</p><br/>";
+        introState.innerHTML += "<p class='messageDisplay'>Today we will test your knowledge of geography.</p><br/>";
         introState.innerHTML += "<input type='button' value='START QUIZ' class='greenButton' id='start-quiz-btn'>";
         state.appendChild(introState);
         document.querySelector("#start-quiz-btn").addEventListener("click", startQuiz);
@@ -19,20 +19,23 @@ let introState = {
 let questionState = {
     currentQuestion:null,
     usersAnswers:[],
+    questionDisplay:"",
+    listOfAnswers:"",
+    messageDisplay:"",
     createDom:function(state){
         const questionStateEl = document.createElement("div");
         questionStateEl.className = "question-state";
 
         const questionContainer = document.createElement("div");
         questionContainer.className = "question-container";
-
+        
         questionContainer.innerHTML += "<h2 class='questiontext' id='question-text'>Insert Question</h2>";
     
         const answersBox = document.createElement("div");
         answersBox.className = "answersbox";
         answersBox.innerHTML += "<ul class='answersListStyle' id='listanswers'></ul>";
         answersBox.innerHTML += "<p id='answerErrorMessage' class='errorMessage'></p><br /> ";
-        answersBox.innerHTML += "<br/><input type='button' value='NEXT' class='greenButton' id='next-button'>";
+        answersBox.innerHTML += "<input type='button' value='NEXT' class='greenButton' id='next-button'>";
 
         questionContainer.appendChild(answersBox);
         questionStateEl.appendChild(questionContainer);
@@ -42,10 +45,25 @@ let questionState = {
 
         document.querySelector("#next-button").addEventListener("click", nextQuestionItem);
         document.querySelector("#check-button").addEventListener("click", checkAnswers);
+        this.questionDisplay = document.querySelector("#question-text");
+        this.listOfAnswers = document.querySelector("#listanswers");
+        this.messageDisplay = document.querySelector("#answerErrorMessage");
     },
     reset:function(){
         this.usersAnswers = [];
         this.currentQuestion = null;
+    },
+    completeMessage:function(){
+
+        if(currentState !== questionState){
+            console.log("Not in questionState. Aborting");
+            return;
+        }
+
+        questionState.questionDisplay.textContent = "QUIZ DONE!";
+        deleteChildren(questionState.listOfAnswers);
+        questionState.messageDisplay.textContent = "Now you can correct the test";
+        document.querySelector("#next-button").style.visibility = "hidden";
     }
 }
 
@@ -72,16 +90,14 @@ function populateQuestion(questionItem){
         return;
     }
 
-    const answersList = document.querySelector("#listanswers");
     let nrAnswers = 0;
 
     //reset question form
-    document.querySelector("#question-text").textContent = "";
-    deleteChildren(answersList);
+    deleteChildren(questionState.listOfAnswers);
 
     const questionNr = questionList.indexOf(questionItem) + 1;
 
-    document.querySelector("#question-text").textContent = "Question " + questionNr + ": " + questionItem.question;
+    questionState.questionDisplay.textContent = "Question " + questionNr + ": " + questionItem.question;
 
     questionItem["answers"].forEach((elem)=> {
         nrAnswers++;
@@ -94,14 +110,14 @@ function populateQuestion(questionItem){
         let answerID = questionItem.id + (nrAnswers+1);
         listItem.innerHTML += `<input type=${questionItem.type} name=${questionItem.id} id=${answerID} value=${nrAnswers}>`;
         listItem.innerHTML += `<label for=${answerID}>${elem}</label><br />`;
-        answersList.appendChild(listItem);
+        questionState.listOfAnswers.appendChild(listItem);
     })
     //console.log("currentState is questionState: ", Object.is(currentState, questionState));
     questionState.currentQuestion = questionItem;
 }
 
 function startQuiz(){
-    console.log("quiz started");
+    //console.log("quiz started");
     setCurrentState(questionState);
     populateQuestion(questionList[0]);
 }
@@ -137,7 +153,6 @@ function nextQuestionItem(){
     //console.log("nextQuestionItem called");
     let radioButtonAnswers = document.querySelectorAll(`input[name=${questionState.currentQuestion.id}]`); //get radiobuttons and checkboxes
     let currentIndex = questionList.indexOf(questionState.currentQuestion);
-    const errorMessage = document.querySelector("#answerErrorMessage");
 
     //is there anymore questions to fill? If no abort function
     if(questionState.usersAnswers.length >= questionList.length){
@@ -147,10 +162,10 @@ function nextQuestionItem(){
 
     //has the user pressed any answer?
     if(Array.from(radioButtonAnswers).filter(elem => elem.checked === true).length === 0){
-        errorMessage.textContent = "You must provide an answer";
+        questionState.messageDisplay.textContent = "You must provide an answer";
         return;
     }
-    errorMessage.textContent = "";
+    questionState.messageDisplay.textContent = "";
 
     let answeresChecked = [];
     radioButtonAnswers.forEach(elem =>{
@@ -168,18 +183,19 @@ function nextQuestionItem(){
 
     questionState.usersAnswers.push(answer);
 
-    console.log(questionList[currentIndex].id);
+    //console.log(questionList[currentIndex].id);
 
     //next question if there is any
     if(currentIndex+1 < questionList.length){
         populateQuestion(questionList[currentIndex+1]);
     }
 
-    console.log(currentIndex);
+    //console.log(currentIndex);
     //was that the last question? If so disable next button and enabled check answers button
     if(currentIndex+1 >= questionList.length){
         document.querySelector("#next-button").disabled = true;
         document.querySelector("#check-button").disabled = false;
+        questionState.completeMessage();
     }
     
 }
@@ -187,11 +203,11 @@ function nextQuestionItem(){
 //function for check answers button
 function checkAnswers(){
     
-    console.log("check-button");
+    //console.log("check-button");
 
     //if the user is still answering the questions and pressing the check button to early
     if(currentState == questionState && questionState.usersAnswers.length < questionList.length){
-        document.querySelector("#answerErrorMessage").textContent = "You must first complete the quiz before checking.";
+        questionState.messageDisplay.textContent = "You must first complete the quiz before checking.";
         return;
     }
 
@@ -216,19 +232,18 @@ function displayResults(){
     let nrOfCorrectAnswers = 0;
 
     questionList.forEach(elem => {
-        console.log(`----------------${elem.id}--------------------`);
-        //get question from questionList based on index number
         
-        console.log(elem.id);
         let typedAnswers = questionState.usersAnswers.find(a => a.id === elem.id).answers; //get users answer based on id
         let correctAnswers = elem.correct; //get the correct answers
-
-        console.log("Users answers: ", ...typedAnswers);
-        console.log("Correct answers: ", ...correctAnswers);
-
-        let isCorrectAnswer = (compareAllArrayElements(typedAnswers, correctAnswers) && compareAllArrayElements(correctAnswers, typedAnswers));
         
-        console.log("Answered correctly? ", isCorrectAnswer);
+        
+        let isCorrectAnswer = correctAnswers.every(a => typedAnswers.includes(a)) && typedAnswers.length == correctAnswers.length;
+        
+        // console.log(`----------------${elem.id}--------------------`);
+        // //get question from questionList based on index number
+        // console.log("Users answers: ", ...typedAnswers);
+        // console.log("Correct answers: ", ...correctAnswers);
+        // console.log("Answered correctly? ", isCorrectAnswer);
         //is the answers between question and users answers to that question correct? Find how many answers the user scored
         if(isCorrectAnswer){
             nrOfCorrectAnswers++;
@@ -247,10 +262,6 @@ function displayResults(){
     else{
         resultCircle.classList.toggle("result-circle-normal");
     }
-}
-
-function compareAllArrayElements(arr, target){
-    return target.every(a => arr.includes(a));
 }
 
 function setCurrentState(state){
