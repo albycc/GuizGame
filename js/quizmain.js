@@ -195,6 +195,7 @@ document.querySelector("#retry-button").addEventListener("click", () =>{
 
 //event listeners for selecting light or dark theme in the settings dropdown
 document.querySelector("#light-menu-item").addEventListener("click", () =>{
+
     bodyEl.className = "lighttheme";
 })
 
@@ -270,17 +271,15 @@ function nextQuestionItem(){
 //event listener for check answers button. When the check answers button is enabled, the user can see the quiz score in the result state.
 function checkAnswers(){
     
-    //console.log("check-button");
+    //if using this function when the app is not in questionState
+    if(currentState !== questionState){
+        console.log("Not in questionState. Aborting");
+        return;
+    }
 
     //if the user is still answering the questions and pressing the check button to early
     if(currentState == questionState && questionState.usersAnswers.length < questionList.length){
         questionState.messageDisplay.textContent = "You must first complete the quiz before checking.";
-        return;
-    }
-
-    //if using this function when the app is not in questionState
-    if(currentState !== questionState){
-        console.log("Not in questionState. Aborting");
         return;
     }
 
@@ -307,6 +306,7 @@ function displayResults(){
     //nr of correct answers
     let nrOfCorrectAnswers = 0;
 
+    //check each question if the answers are correct and add the score
     questionList.forEach(elem => {
         
         let typedAnswers = questionState.usersAnswers.find(a => a.id === elem.id).answers; //get users answer based on id
