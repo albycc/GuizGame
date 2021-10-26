@@ -1,3 +1,15 @@
+/*
+Question data to populate the app
+
+Each object has five variables.
+"id" - explanatory, the variable to identify the question. Must be unique
+"question" - The question itself in text
+"type" - type of input. MUST be either radio for one choice, or checkbox, where multiple answers can occur
+"answers" - The anwsers to the question the user can choose in an array. Will populate a list of inputs whose type is dependent on the previous variable
+"correct" - An array of correct answers. Here it represents in integers, 1 - 4, where each number corresponds to the answers above in ascending order. 
+    If 1 is stored, the first answer is correct, and so forth. There can be multiple correct answers if a checkbox is used.
+*/
+
 let questionList = [
     {
         "id": "question1",
