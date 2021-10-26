@@ -195,12 +195,10 @@ document.querySelector("#retry-button").addEventListener("click", () =>{
 
 //event listeners for selecting light or dark theme in the settings dropdown
 document.querySelector("#light-menu-item").addEventListener("click", () =>{
-    console.log("light them active");
     bodyEl.className = "lighttheme";
 })
 
 document.querySelector("#dark-menu-item").addEventListener("click", () =>{
-    console.log("dark them active");
     bodyEl.className = "darktheme";
 })
 
@@ -214,7 +212,6 @@ function nextQuestionItem(){
 
     //get radiobuttons and checkboxes
     let radioButtonAnswers = document.querySelectorAll(`input[name=${questionState.currentQuestion.id}]`);
-    console.log(radioButtonAnswers);
     //What index is the current question in the question list. Used for grabbing the next question and for handling errors.
     let currentIndex = questionList.indexOf(questionState.currentQuestion);
 
