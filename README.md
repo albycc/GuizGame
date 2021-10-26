@@ -32,7 +32,7 @@ Or if you use git, in the command prompt download the project with command
 
 ### Running
 
-To edit this project, open any edtior you like
+To edit this project, open any editor you like
 
 To run it, you need to launch it as a local development server like LiveServer for Visual Studio Code.
 
