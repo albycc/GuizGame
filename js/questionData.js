@@ -49,7 +49,7 @@ let questionList = [
     },
     {
         "id": "question4",
-        "question": "Of the following cities, which one is in Great Britain?",
+        "question": "Of the following cities, which one is in Great Britain? (multiple choice answers)",
         "type": "checkbox", //radio or checkbox
         "answers": [
             "Edinburgh",
@@ -85,7 +85,7 @@ let questionList = [
     },
     {
         "id": "question7",
-        "question": "Which of the following countries borders the mountain Monc Blanc?",
+        "question": "Which of the following countries borders the mountain Monc Blanc? (multiple choice answers)",
         "type": "checkbox", //radio or checkbox
         "answers": [
             "France",
@@ -97,7 +97,7 @@ let questionList = [
     },
     {
         "id": "question8",
-        "question": "Which of the following countries does the river Donau flow through?",
+        "question": "Which of the following countries does the river Donau flow through? (multiple choice answers)",
         "type": "checkbox", //radio or checkbox
         "answers": [
             "Czeck Republic",
@@ -121,7 +121,7 @@ let questionList = [
     },
     {
         "id": "question10",
-        "question": "Which of the following small countries exists in Italy?",
+        "question": "Which of the following small countries exists in Italy? (multiple choice answers)",
         "type": "checkbox", //radio or checkbox
         "answers": [
             "San Marino",
